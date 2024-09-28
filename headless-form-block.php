@@ -3,7 +3,8 @@
  * Plugin Name: Headless Form Block
  * Description: A custom Gutenberg block for creating forms in headless WordPress sites.
  * Version: 1.0.0
- * Author: Your Name
+ * Author: Jeff Haug
+ * Author URI: https://hozt.com
  * Text Domain: headless-form-block
  */
 
@@ -17,6 +18,16 @@ function headless_form_block_init() {
     ) );
 }
 add_action( 'init', 'headless_form_block_init' );
+
+function enqueue_block_editor_assets() {
+    wp_enqueue_style(
+        'my-block-editor-css',
+        plugins_url( 'build/editor.css', __FILE__ ),
+        array( 'wp-edit-blocks' ),
+        filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.css' )
+    );
+}
+add_action( 'enqueue_block_editor_assets', 'enqueue_block_editor_assets' );
 
 function headless_form_block_render_callback($attributes, $content) {
     $form_name = isset($attributes['formName']) ? $attributes['formName'] : '';
@@ -56,6 +67,19 @@ function headless_form_block_render_callback($attributes, $content) {
                         break;
                     case 'email':
                         echo '<input type="email" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
+                        break;
+                    case 'textarea':
+                        echo '<textarea id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"';
+                        if (!empty($field['rows'])) {
+                            echo ' rows="' . esc_attr($field['rows']) . '"';
+                        }
+                        if (!empty($field['cols'])) {
+                            echo ' cols="' . esc_attr($field['cols']) . '"';
+                        }
+                        if ($field['required']) {
+                            echo ' required';
+                        }
+                        echo '></textarea>';
                         break;
                     case 'checkbox':
                         echo '<input type="checkbox" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';

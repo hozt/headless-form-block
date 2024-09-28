@@ -1,0 +1,54 @@
+.headless-form-block-editor {
+    .form-field-preview {
+        max-width: 600px;
+        background: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: move;
+
+        &.form-field-text {
+            border-left: 4px solid #007cba;
+        }
+
+        &.form-field-checkbox {
+            border-left: 4px solid #8bd9f6;
+        }
+
+        &.form-field-hidden {
+            border-left: 4px solid #cfcdca;
+        }
+
+        &.form-field-email {
+            border-left: 4px solid #2cb8c0;
+        }
+
+        &.form-field-textarea {
+            border-left: 4px solid #2fe047;
+        }
+
+        &.form-field-date {
+            border-left: 4px solid #754870;
+        }
+
+        &.form-field-radio {
+            border-left: 4px solid #53ac81;
+        }
+
+        &.form-field-select {
+            border-left: 4px solid #d5b779;
+        }
+    }
+
+    .add-field-button {
+        background-color: #808080;
+        color: #fff;
+        font-size: 12px;
+        padding: 4px 8px;
+        height: auto;
+    }
+
+    .form-preview-submit {
+        margin-top: 20px;
+    }
+}
