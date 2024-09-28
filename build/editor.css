@@ -1,0 +1,47 @@
+/*!**********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/editor.scss ***!
+  \**********************************************************************************************************/
+.headless-form-block-editor .form-field-preview {
+  max-width: 600px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: move;
+}
+.headless-form-block-editor .form-field-preview.form-field-text {
+  border-left: 4px solid #007cba;
+}
+.headless-form-block-editor .form-field-preview.form-field-checkbox {
+  border-left: 4px solid #8bd9f6;
+}
+.headless-form-block-editor .form-field-preview.form-field-hidden {
+  border-left: 4px solid #cfcdca;
+}
+.headless-form-block-editor .form-field-preview.form-field-email {
+  border-left: 4px solid #2cb8c0;
+}
+.headless-form-block-editor .form-field-preview.form-field-textarea {
+  border-left: 4px solid #2fe047;
+}
+.headless-form-block-editor .form-field-preview.form-field-date {
+  border-left: 4px solid #754870;
+}
+.headless-form-block-editor .form-field-preview.form-field-radio {
+  border-left: 4px solid #53ac81;
+}
+.headless-form-block-editor .form-field-preview.form-field-select {
+  border-left: 4px solid #d5b779;
+}
+.headless-form-block-editor .add-field-button {
+  background-color: #808080;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  height: auto;
+}
+.headless-form-block-editor .form-preview-submit {
+  margin-top: 20px;
+}
+
+/*# sourceMappingURL=editor.css.map*/
