@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "headless-form-block/form",
+  "title": "Headless Form",
+  "category": "widgets",
+  "icon": "feedback",
+  "description": "Add a customizable form for headless WordPress sites.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "headless-form-block",
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "style": "file:./build/style-index.css",
+  "attributes": {
+    "formName": {
+      "type": "string",
+      "default": ""
+    },
+    "formFields": {
+      "type": "array",
+      "default": []
+    },
+    "submitButtonText": {
+      "type": "string",
+      "default": "Submit"
+    }
+  }
+}
