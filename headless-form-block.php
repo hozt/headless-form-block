@@ -26,8 +26,32 @@ function enqueue_block_editor_assets() {
         array( 'wp-edit-blocks' ),
         filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.css' )
     );
+
+    wp_enqueue_script(
+        'my-block-editor-js',
+        plugins_url( 'build/editor.js', __FILE__ ),
+        array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+        filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.js' )
+    );
 }
 add_action( 'enqueue_block_editor_assets', 'enqueue_block_editor_assets' );
+
+function enqueue_block_assets() {
+    wp_enqueue_script(
+        'my-block-js',
+        plugins_url( 'build/index.js', __FILE__ ),
+        array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+        filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' )
+    );
+
+    // wp_enqueue_style(
+    //     'my-block-css',
+    //     plugins_url( 'build/style.css', __FILE__ ),
+    //     array(),
+    //     filemtime( plugin_dir_path( __FILE__ ) . 'build/style.css' )
+    // );
+}
+add_action( 'enqueue_block_assets', 'enqueue_block_assets' );
 
 function headless_form_block_render_callback($attributes, $content) {
     $form_name = isset($attributes['formName']) ? $attributes['formName'] : '';
