@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Headless Form Block
  * Description: A custom Gutenberg block for creating forms in headless WordPress sites.
- * Version: 1.0.1
+ * Version: 1.0.3
  * Author: Jeff Haug
  * Author URI: https://hozt.com
  * Text Domain: headless-form-block
@@ -19,24 +19,17 @@ function headless_form_block_init() {
 }
 add_action( 'init', 'headless_form_block_init' );
 
-function enqueue_block_editor_assets() {
+function headless_form_enqueue_editor_assets() {
     wp_enqueue_style(
         'my-block-editor-css',
-        plugins_url( 'build/editor.css', __FILE__ ),
+        plugins_url( 'editor.css', __FILE__ ),
         array( 'wp-edit-blocks' ),
-        filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.css' )
-    );
-
-    wp_enqueue_script(
-        'my-block-editor-js',
-        plugins_url( 'build/editor.js', __FILE__ ),
-        array( 'wp-blocks', 'wp-element', 'wp-editor' ),
-        filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.js' )
+        filemtime( plugin_dir_path( __FILE__ ) . 'styles/editor.css' )
     );
 }
-add_action( 'enqueue_block_editor_assets', 'enqueue_block_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'headless_form_enqueue_editor_assets' );
 
-function enqueue_block_assets() {
+function headless_form_enqueue_frontend_assets() {
     wp_enqueue_script(
         'my-block-js',
         plugins_url( 'build/index.js', __FILE__ ),
@@ -44,14 +37,14 @@ function enqueue_block_assets() {
         filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' )
     );
 
-    // wp_enqueue_style(
-    //     'my-block-css',
-    //     plugins_url( 'build/style.css', __FILE__ ),
-    //     array(),
-    //     filemtime( plugin_dir_path( __FILE__ ) . 'build/style.css' )
-    // );
+    wp_enqueue_style(
+        'my-block-css',
+        plugins_url( 'style.css', __FILE__ ),
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'styles/style.css' )
+    );
 }
-add_action( 'enqueue_block_assets', 'enqueue_block_assets' );
+add_action( 'enqueue_block_assets', 'headless_form_enqueue_frontend_assets' );
 
 function headless_form_block_render_callback($attributes, $content) {
     $form_name = isset($attributes['formName']) ? $attributes['formName'] : '';
@@ -72,7 +65,6 @@ function headless_form_block_render_callback($attributes, $content) {
                 <?php
                 switch ($field['type']) {
                     case 'text':
-                    case 'email':
                     case 'date':
                         echo '<input type="' . esc_attr($field['type']) . '" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"';
                         if (!empty($field['size'])) {
@@ -106,10 +98,14 @@ function headless_form_block_render_callback($attributes, $content) {
                         echo '></textarea>';
                         break;
                     case 'checkbox':
+                        echo '<label><input type="' . esc_attr($field['type']) . '" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
                         echo '<input type="checkbox" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
+                        echo '</label>';
                         break;
                     case 'radio':
+                        echo '<label><input type="' . esc_attr($field['type']) . '" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
                         echo '<input type="radio" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
+                        echo '</label>';
                         break;
                     case 'select':
                         echo '<select id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';

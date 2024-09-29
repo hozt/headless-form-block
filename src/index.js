@@ -1,3 +1,4 @@
+// src/index.js
 import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, TextControl, Button, SelectControl, CheckboxControl, TextareaControl } from '@wordpress/components';
