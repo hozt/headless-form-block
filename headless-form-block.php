@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Headless Form Block
  * Description: A custom Gutenberg block for creating forms in headless WordPress sites.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Jeff Haug
  * Author URI: https://hozt.com
  * Text Domain: headless-form-block
