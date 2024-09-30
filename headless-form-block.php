@@ -83,7 +83,7 @@ function headless_form_block_render_callback($attributes, $content) {
                         echo '<input type="hidden" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
                         break;
                     case 'email':
-                        echo '<input type="email" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
+                        echo '<input type="email" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . ' size="40" maxlength="254">';
                         break;
                     case 'textarea':
                         echo '<textarea id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"';
