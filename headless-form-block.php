@@ -55,7 +55,7 @@ function headless_form_block_render_callback($attributes, $content) {
 
     ob_start();
     ?>
-    <div class="headless-form-block flex <?php echo $form_class;?>">
+    <div class="headless-form-block <?php echo $form_class;?>">
         <?php foreach ($form_fields as $field) : ?>
             <?php $fieldClass = sanitize_title($field['name']); ?>
             <div class="form-field field-<?php echo $fieldClass;?> form-field-<?php echo esc_attr($field['type']); ?>">
