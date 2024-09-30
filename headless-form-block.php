@@ -55,7 +55,7 @@ function headless_form_block_render_callback($attributes, $content) {
 
     ob_start();
     ?>
-    <form class="headless-form-block <?php echo $form_class;?>" name="<?php echo esc_attr($form_name); ?>">
+    <div class="headless-form-block flex <?php echo $form_class;?>">
         <?php foreach ($form_fields as $field) : ?>
             <?php $fieldClass = sanitize_title($field['name']); ?>
             <div class="form-field field-<?php echo $fieldClass;?> form-field-<?php echo esc_attr($field['type']); ?>">
@@ -121,7 +121,7 @@ function headless_form_block_render_callback($attributes, $content) {
             </div>
         <?php endforeach; ?>
         <button type="submit"><?php echo esc_html($submit_button_text); ?></button>
-    </form>
+    </div>
     <?php
     return ob_get_clean();
 }
