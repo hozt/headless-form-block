@@ -57,7 +57,8 @@ function headless_form_block_render_callback($attributes, $content) {
     ?>
     <form class="headless-form-block <?php echo $form_class;?>" name="<?php echo esc_attr($form_name); ?>">
         <?php foreach ($form_fields as $field) : ?>
-            <div class="form-field form-field-<?php echo esc_attr($field['type']); ?>">
+            <?php $fieldClass = sanitize_title($field['name']); ?>
+            <div class="form-field field-<?php echo $fieldClass;?> form-field-<?php echo esc_attr($field['type']); ?>">
                 <label for="<?php echo esc_attr($field['name']); ?>">
                     <?php echo esc_html($field['label']); ?>
                     <?php if ($field['required']) echo ' <span class="required">*</span>'; ?>
