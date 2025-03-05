@@ -146,9 +146,33 @@ const TextareaFieldOptions = ({ field, updateField }) => (
     </>
 );
 
+const PasswordFieldOptions = ({ field, updateField }) => (
+    <>
+        <TextControl
+            label="Field Label"
+            value={field.label}
+            onChange={(label) => updateField({ label })}
+            size={30}
+            required
+        />
+        <TextControl
+            label="Size"
+            type="number"
+            value={field.size || ''}
+            onChange={(size) => updateField({ size: size ? parseInt(size, 10) : '' })}
+            size={5}
+        />
+        <CheckboxControl
+            label="Required"
+            checked={field.required}
+            onChange={(required) => updateField({ required })}
+        />
+    </>
+);
+
 registerBlockType(metadata.name, {
     edit: ({ attributes, setAttributes }) => {
-        const { formName, formFields, submitButtonText } = attributes;
+        const { formName, formFields, submitButtonText, emailSubject } = attributes;
 
         const blockProps = useBlockProps({
             className: 'headless-form-block-editor',
@@ -204,6 +228,11 @@ registerBlockType(metadata.name, {
                             onChange={(value) => setAttributes({ formName: value })}
                         />
                         <TextControl
+                            label="Email Subject"
+                            value={emailSubject}
+                            onChange={(value) => setAttributes({ emailSubject: value })}
+                        />
+                        <TextControl
                             label="Submit Button Text"
                             value={submitButtonText}
                             onChange={(value) => setAttributes({ submitButtonText: value })}
@@ -235,7 +264,8 @@ registerBlockType(metadata.name, {
                                                             { label: 'Radio', value: 'radio' },
                                                             { label: 'Select', value: 'select' },
                                                             { label: 'Hidden', value: 'hidden' },
-                                                            { label: 'Date', value: 'date' }
+                                                            { label: 'Date', value: 'date' },
+                                                            { label: 'Password', value: 'password' }
                                                         ]}
                                                         onChange={(type) => updateField(index, { type })}
                                                     />
@@ -265,6 +295,12 @@ registerBlockType(metadata.name, {
                                                     )}
                                                     {field.type === 'textarea' && (
                                                         <TextareaFieldOptions
+                                                            field={field}
+                                                            updateField={(updates) => updateField(index, updates)}
+                                                        />
+                                                    )}
+                                                    {field.type === 'password' && (
+                                                        <PasswordFieldOptions
                                                             field={field}
                                                             updateField={(updates) => updateField(index, updates)}
                                                         />

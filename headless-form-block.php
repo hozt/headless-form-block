@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Headless Form Block
  * Description: A custom Gutenberg block for creating forms in headless WordPress sites.
- * Version: 1.0.3
+ * Version: 1.0.9
  * Author: Jeff Haug
  * Author URI: https://hozt.com
  * Text Domain: headless-form-block
@@ -22,7 +22,7 @@ add_action( 'init', 'headless_form_block_init' );
 function headless_form_enqueue_editor_assets() {
     wp_enqueue_style(
         'my-block-editor-css',
-        plugins_url( 'editor.css', __FILE__ ),
+        plugins_url( 'styles/editor.css', __FILE__ ),
         array( 'wp-edit-blocks' ),
         filemtime( plugin_dir_path( __FILE__ ) . 'styles/editor.css' )
     );
@@ -39,7 +39,7 @@ function headless_form_enqueue_frontend_assets() {
 
     wp_enqueue_style(
         'my-block-css',
-        plugins_url( 'style.css', __FILE__ ),
+        plugins_url( 'styles/style.css', __FILE__ ),
         array(),
         filemtime( plugin_dir_path( __FILE__ ) . 'styles/style.css' )
     );
@@ -52,10 +52,12 @@ function headless_form_block_render_callback($attributes, $content) {
     $submit_button_text = isset($attributes['submitButtonText']) ? $attributes['submitButtonText'] : 'Submit';
     $form_class = sanitize_title($form_name);
     $form_class .= ' ' . sanitize_title(get_post_field('post_name', get_the_ID()));
+    $email_subject = isset($attributes['emailSubject']) ? $attributes['emailSubject'] : '';
 
     ob_start();
     ?>
-    <div class="headless-form-block <?php echo $form_class;?>">
+    <form class="headless-form-block <?php echo $form_class;?>">
+        <input type="hidden" name="email_subject" value="<?php echo esc_attr($email_subject); ?>">
         <?php foreach ($form_fields as $field) : ?>
             <?php $fieldClass = sanitize_title($field['name']); ?>
             <div class="form-field field-<?php echo $fieldClass;?> form-field-<?php echo esc_attr($field['type']); ?>">
@@ -116,12 +118,23 @@ function headless_form_block_render_callback($attributes, $content) {
                         }
                         echo '</select>';
                         break;
+                    case 'password':
+                        echo '<input type="password" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"';
+                        if (!empty($field['size'])) {
+                            echo ' size="' . esc_attr($field['size']) . '"';
+                        }
+                        if ($field['required']) {
+                            echo ' required';
+                        }
+                        echo '>';
+                        break;
                 }
                 ?>
             </div>
         <?php endforeach; ?>
-        <button type="submit"><?php echo esc_html($submit_button_text); ?></button>
-    </div>
+        <div id="cf-turnstile"></div>
+        <button type="submit" id="submitButton"><?php echo esc_html($submit_button_text); ?></button>
+    </form>
     <?php
     return ob_get_clean();
 }

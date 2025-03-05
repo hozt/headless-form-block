@@ -18,6 +18,10 @@
       "type": "string",
       "default": ""
     },
+    "emailSubject": {
+      "type": "string",
+      "default": ""
+    },
     "formFields": {
       "type": "array",
       "default": []
