@@ -3,9 +3,16 @@
  * Plugin Name: Headless Form Block
  * Description: A custom Gutenberg block for creating forms in headless WordPress sites.
  * Version: 1.0.9
- * Author: Jeff Haug
+ * Author: Jeffrey Haug
  * Author URI: https://hozt.com
  * Text Domain: headless-form-block
+ *
+ * Registers a Gutenberg block that renders a server-side HTML form for use with
+ * headless WordPress + Astro (astro-wp) setups. The static front-end handles
+ * form submission; WordPress only provides the markup via the REST/WPGraphQL API.
+ * Includes a Cloudflare Turnstile CAPTCHA placeholder (#cf-turnstile).
+ *
+ * @author Jeffrey Haug <https://hozt.com>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,13 +37,8 @@ function headless_form_enqueue_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'headless_form_enqueue_editor_assets' );
 
 function headless_form_enqueue_frontend_assets() {
-    wp_enqueue_script(
-        'my-block-js',
-        plugins_url( 'build/index.js', __FILE__ ),
-        array( 'wp-blocks', 'wp-element', 'wp-editor' ),
-        filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' )
-    );
-
+    // Only enqueue the front-end stylesheet — the editor JS is registered via
+    // block.json (editorScript) and must not be loaded on the public front-end.
     wp_enqueue_style(
         'my-block-css',
         plugins_url( 'styles/style.css', __FILE__ ),
@@ -101,14 +103,10 @@ function headless_form_block_render_callback($attributes, $content) {
                         echo '></textarea>';
                         break;
                     case 'checkbox':
-                        echo '<label><input type="' . esc_attr($field['type']) . '" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
                         echo '<input type="checkbox" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
-                        echo '</label>';
                         break;
                     case 'radio':
-                        echo '<label><input type="' . esc_attr($field['type']) . '" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
                         echo '<input type="radio" id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';
-                        echo '</label>';
                         break;
                     case 'select':
                         echo '<select id="' . esc_attr($field['name']) . '" name="' . esc_attr($field['name']) . '"' . ($field['required'] ? ' required' : '') . '>';

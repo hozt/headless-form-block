@@ -1,4 +1,13 @@
-// src/index.js
+/**
+ * Headless Form Block — Gutenberg block editor script.
+ *
+ * Registers the "headless-form-block/form" block type and provides the
+ * drag-and-drop field builder used inside the WordPress block editor.
+ * The block saves no HTML (save: null); all front-end markup is produced
+ * by the PHP render_callback in headless-form-block.php.
+ *
+ * @author Jeffrey Haug <https://hozt.com>
+ */
 import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, TextControl, Button, SelectControl, CheckboxControl, TextareaControl } from '@wordpress/components';
@@ -152,6 +161,13 @@ const PasswordFieldOptions = ({ field, updateField }) => (
             label="Field Label"
             value={field.label}
             onChange={(label) => updateField({ label })}
+            size={30}
+            required
+        />
+        <TextControl
+            label="Field Name"
+            value={field.name}
+            onChange={(name) => updateField({ name })}
             size={30}
             required
         />

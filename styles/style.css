@@ -1,3 +1,11 @@
+/**
+ * Headless Form Block — front-end styles.
+ *
+ * Applied to the server-rendered <form> element on the public-facing site.
+ * Override these styles in your Astro / theme stylesheet as needed.
+ *
+ * @author Jeffrey Haug <https://hozt.com>
+ */
 .headless-form-block {
     max-width: 600px;
     margin: 0 auto;
